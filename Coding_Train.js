@@ -7,6 +7,12 @@ var turn_rate;
 var pivot;
 var cx, cy;
 
+var the_map;
+
+function preload(){
+  the_map = loadImage( 'data/map-americas.gif' );
+}
+
 function setup() {
   createCanvas( 800, 600 );
   cx = width/2;
@@ -18,11 +24,15 @@ function setup() {
   
   turn_rate = PI * 0.125;
   
+  locomotiva = createVector( 1466.3, 1084.5 ); // NY
+  // SP - 1800.7 2247.7
   path = [];
   for( var i = 0; i < vagoes * cv; ++i ){
-    path.push( createVector( cx - i * V, cy ) );
+    path.push( createVector( locomotiva.x, locomotiva.y ) ); //( cx - i * V, cy ) );
   }
-  locomotiva = createVector( cx, cy );
+  
+  
+ 
   pivot = 0;
 }
 
@@ -48,11 +58,12 @@ function draw() {
   
   translate( cx - locomotiva.x, cy -locomotiva.y );
   noFill();
-  for( var i = -2; i <= 2; ++i ){
-    for( var j = -2; j <= 2; ++j ){
-      rect( i*width, j*height, width, height );
-    }
-  }
+  image( the_map, 0, 0 );
+  //for( var i = -2; i <= 2; ++i ){
+  //  for( var j = -2; j <= 2; ++j ){
+  //    rect( i*width, j*height, width, height );
+  //  }
+  //}
   resetMatrix();
   
   fill(127);
@@ -67,6 +78,9 @@ function draw() {
     rect(0, -12, 0.8 * C, 24 );
     resetMatrix();
   }
+}
+function mouseReleased(){
+  print( mouseX - cx + locomotiva.x , mouseY - cy + locomotiva.y );
 }
 
 function keyPressed(){
